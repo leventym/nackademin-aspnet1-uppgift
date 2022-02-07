@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieMonster", "MovieMonster\MovieMonster.csproj", "{0193C0FA-226A-499D-9E42-1F444E341D5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieMonsterApi", "MovieMonsterApi\MovieMonsterApi.csproj", "{827711F9-57EB-44E8-A357-96A47A58974E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0193C0FA-226A-499D-9E42-1F444E341D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0193C0FA-226A-499D-9E42-1F444E341D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0193C0FA-226A-499D-9E42-1F444E341D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0193C0FA-226A-499D-9E42-1F444E341D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{827711F9-57EB-44E8-A357-96A47A58974E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{827711F9-57EB-44E8-A357-96A47A58974E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{827711F9-57EB-44E8-A357-96A47A58974E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{827711F9-57EB-44E8-A357-96A47A58974E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63A03376-1F1D-447C-BDA0-BE9CAA5E8717}
+	EndGlobalSection
+EndGlobal
