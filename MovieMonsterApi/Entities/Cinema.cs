@@ -1,8 +1,9 @@
-﻿namespace MovieMonsterApi.Entities
+﻿using MovieMonsterApi.Repositories;
+
+namespace MovieMonsterApi.Entities
 {
-    public class Cinema
+    public class Cinema : Entity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public List<Movie> Movies { get; set; }
     }

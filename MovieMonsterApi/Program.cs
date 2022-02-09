@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieMonsterApi.Data;
+using MovieMonsterApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MovieMonsterContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+
+//Services
+builder.Services.AddScoped(typeof(IEFBaseAsyncRepository<,>), typeof(EFBaseAsyncRepository<,>));
+
 
 var app = builder.Build();
 

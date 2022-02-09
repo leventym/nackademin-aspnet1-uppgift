@@ -63,14 +63,8 @@ namespace MovieMonsterApi.Repositories
 
         public async Task UpdateAsync(TEntity entity)
         {
-            var item = await GetByIdAsync(entity.Id);
-
-            if (item != null)
-            {
-                dbSet.Update(item);
-                _context.Update(entity);
-                await _context.SaveChangesAsync();
-            }
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }
