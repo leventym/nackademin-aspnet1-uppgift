@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieMonsterApi.Data;
+using System.Linq.Expressions;
 
 namespace MovieMonsterApi.Repositories
 {
@@ -61,10 +62,23 @@ namespace MovieMonsterApi.Repositories
             return await dbSet.FindAsync(id);
         }
 
+        //public async Task<TEntity> GetByIdAsync(TId id, params Expression<Func<TEntity, object>>[] includeProperties)
+        //{
+        //    var query = Including(includeProperties);
+            
+        //    return await query.;
+        //}
+
         public async Task UpdateAsync(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+        }
+
+        //Generisk metod för att inkludera relaterade tabeller
+        private IQueryable<TEntity> Including(params Expression<Func<TEntity, object>> [] includeProperties)
+        {
+            return includeProperties.Aggregate(dbSet.AsQueryable(), (current, includeProperty) => current.Include(includeProperty));
         }
     }
 }

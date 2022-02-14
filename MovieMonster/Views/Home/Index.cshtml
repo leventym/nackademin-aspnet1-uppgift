@@ -1,8 +1,27 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Movie>
+
+@{
+    ViewData["Title"] = "Movie Monster";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @foreach (var movie in Model)
+        {
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Name</h5>
+                        <p class="card-text">@movie.Description</p>
+                    </div>
+                    <div class="card-footer">
+                        @movie.StartDate/@movie.EndDate
+                    </div>
+                    <div class="btn-group">
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Köp</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

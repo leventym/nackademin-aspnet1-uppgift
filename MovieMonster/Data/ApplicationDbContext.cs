@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MovieMonster.Models;
 
 namespace MovieMonster.Data
 {
@@ -9,5 +10,6 @@ namespace MovieMonster.Data
             : base(options)
         {
         }
+        public DbSet<MovieMonster.Models.Movie> Movie { get; set; }
     }
 }
