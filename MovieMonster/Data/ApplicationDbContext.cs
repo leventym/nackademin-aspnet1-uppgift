@@ -11,5 +11,6 @@ namespace MovieMonster.Data
         {
         }
         public DbSet<MovieMonster.Models.Movie> Movie { get; set; }
+        public DbSet<MovieMonster.Models.Category> Category { get; set; }
     }
 }

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MovieMonster.Models.Category>
+
+@{
+    ViewData["Title"] = "MoviesByCategories";
+}
+
+<h1>MoviesByCategories</h1>
+
+@foreach (var category in Model)
+{
+    <h3>@category.Name</h3>
+
+    foreach(var movie in category.Movies)
+    {
+        <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@movie.Name</h5>
+                <p class="card-text">@movie.StartDate - @movie.EndDate</p>
+            </div>
+            <div class="btn-group">
+                <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Detaljer</a>
+            </div>
+        </div>
+    </div>
+    }
+}
+
+

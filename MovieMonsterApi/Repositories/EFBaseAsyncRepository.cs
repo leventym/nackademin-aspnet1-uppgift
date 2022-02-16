@@ -22,10 +22,12 @@ namespace MovieMonsterApi.Repositories
     public interface IEFBaseAsyncRepository<TEntity, TId> where TEntity : Entity<TId>
     {
         Task<IReadOnlyList<TEntity>> GetAllAsync();
-        Task<TEntity> GetByIdAsync(TId id);
+        Task<TEntity> GetByIdAsync(TId id, params Expression<Func<TEntity, IEnumerable<object>>>[] includeProperties);
         Task CreateAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TId id);
+        Task<IReadOnlyList<TEntity>> GetAllAsync(params Expression<Func<TEntity, IEnumerable<object>>>[] includeProperties);
+
 
     }
     public class EFBaseAsyncRepository<TEntity, TId> : IEFBaseAsyncRepository<TEntity, TId> where TEntity : Entity<TId>
@@ -57,18 +59,22 @@ namespace MovieMonsterApi.Repositories
             return await dbSet.ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(TId id)
+        public async Task<IReadOnlyList<TEntity>> GetAllAsync(params Expression<Func<TEntity, IEnumerable<object>>>[] includeProperties)
         {
-            return await dbSet.FindAsync(id);
+            var entities = await dbSet.ToListAsync();
+            await Including(entities, includeProperties);
+            return entities;
         }
 
-        //public async Task<TEntity> GetByIdAsync(TId id, params Expression<Func<TEntity, object>>[] includeProperties)
-        //{
-        //    var query = Including(includeProperties);
-            
-        //    return await query.;
-        //}
+        public async Task<TEntity> GetByIdAsync(TId id, params Expression<Func<TEntity, IEnumerable<object>>>[] includeProperties)
+        {
+            var entity = await dbSet.FindAsync(id);
 
+            await Including(entity, includeProperties);
+
+            return entity;
+
+        }
         public async Task UpdateAsync(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
@@ -76,9 +82,27 @@ namespace MovieMonsterApi.Repositories
         }
 
         //Generisk metod för att inkludera relaterade tabeller
-        private IQueryable<TEntity> Including(params Expression<Func<TEntity, object>> [] includeProperties)
+        private async Task<TEntity> Including(TEntity entity, params Expression<Func<TEntity, IEnumerable<object>>>[] includeProperties)
         {
-            return includeProperties.Aggregate(dbSet.AsQueryable(), (current, includeProperty) => current.Include(includeProperty));
+
+            foreach (var property in includeProperties)
+            {
+                await _context.Entry(entity).Collection(property).LoadAsync();
+            }
+            return entity;
+
+        }
+
+        private async Task<IEnumerable<TEntity>> Including(IEnumerable<TEntity> entities, params Expression<Func<TEntity, IEnumerable<object>>>[] includeProperties)
+        {
+            foreach(var entity in entities)
+            {
+                foreach (var property in includeProperties)
+                {
+                    await _context.Entry(entity).Collection(property).LoadAsync();
+                }
+            }
+            return entities;
         }
     }
 }

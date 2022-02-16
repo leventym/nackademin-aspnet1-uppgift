@@ -1,8 +1,12 @@
-﻿@model IEnumerable<Movie>
+﻿@model IEnumerable<MovieMonster.Models.Movie>
 
 @{
     ViewData["Title"] = "Movie Monster";
 }
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Lägg till film</a>
+</p>
 
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -12,13 +16,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">@movie.Name</h5>
-                        <p class="card-text">@movie.Description</p>
-                    </div>
-                    <div class="card-footer">
-                        @movie.StartDate/@movie.EndDate
+                        <p class="card-text">@movie.StartDate - @movie.EndDate</p>
                     </div>
                     <div class="btn-group">
-                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Köp</a>
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Detaljer</a>
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Movies" asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
             </div>

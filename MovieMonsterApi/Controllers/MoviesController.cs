@@ -33,7 +33,7 @@ namespace MovieMonsterApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
         {
-            var actor = await _context.GetByIdAsync(id);
+            var actor = await _context.GetByIdAsync(id, x => x.Categories, x => x.Cinemas, x => x.Actors);
 
             if (actor == null)
             {

@@ -41,8 +41,36 @@
             @Html.DisplayFor(model => model.EndDate)
         </dd>
     </dl>
+    <h5>Information</h5><br />
+    <h6>Skådespelare</h6>
+    @foreach(var item in Model.Actors)
+    {
+        <dl>
+            <dd class = "col-sm-10">
+                <p>@item.FirstName @item.LastName</p>
+            </dd>
+        </dl>
+    }
+    <h6>Biograf</h6>
+    @foreach(var cinema in Model.Cinemas)
+    {
+        <dl>
+            <dd class = "col-sm-10">
+                <p>@cinema.Name</p>
+            </dd>
+        </dl>
+    }
+    <h6>Kategori</h6>
+    @foreach(var category in Model.Categories)
+    {
+        <dl>
+            <dd class = "col-sm-10">
+                <p>@category.Name</p>
+            </dd>
+        </dl>
+    }
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

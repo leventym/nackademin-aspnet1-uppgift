@@ -26,7 +26,7 @@ namespace MovieMonsterApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Category>>> GetCategories()
         {
-            return Ok(await _context.GetAllAsync());
+            return Ok(await _context.GetAllAsync(x => x.Movies));
         }
 
         // GET: api/Categories/5
