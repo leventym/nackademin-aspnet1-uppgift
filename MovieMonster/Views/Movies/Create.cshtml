@@ -1,10 +1,10 @@
-﻿@model MovieMonster.Models.Movie
+﻿@model MovieMonster.Models.Forms.MovieCreateForm
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Skapa film</h1>
 
 <h4>Movie</h4>
 <hr />
@@ -36,6 +36,34 @@
                 <label asp-for="EndDate" class="control-label"></label>
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="Categories" class="control-label"></label>
+                <input asp-for="Categories" class="form-control" />
+                <span asp-validation-for="Categories" class="text-danger"></span>*@
+
+                <label asp-for="Categories" class="control-label"></label>
+                <select asp-for="Categories" class ="form-control" asp-items="ViewBag.CategoryName"></select>
+
+
+            </div>
+            <div class="form-group">
+                @*<label asp-for="Cinemas" class="control-label"></label>
+                <input asp-for="Cinemas" class="form-control" />
+                <span asp-validation-for="Cinemas" class="text-danger"></span>*@
+
+
+                <label asp-for="Cinemas" class="control-label"></label>
+                <select asp-for="Cinemas" class ="form-control" asp-items="ViewBag.CinemaName"></select>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="Actors" class="control-label"></label>
+                <input asp-for="Actors" class="form-control" />
+                <span asp-validation-for="Actors" class="text-danger"></span>*@
+
+
+                <label asp-for="Actors" class="control-label"></label>
+                <select asp-for="Actors" class ="form-control" asp-items="ViewBag.ActorName"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

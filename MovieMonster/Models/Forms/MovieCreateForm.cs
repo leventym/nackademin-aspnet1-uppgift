@@ -1,4 +1,6 @@
-﻿namespace MovieMonster.Models.Forms
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace MovieMonster.Models.Forms
 {
     public class MovieCreateForm
     {
@@ -7,8 +9,8 @@
         public int Price { get; set; }
         public int StartDate { get; set; }
         public int EndDate { get; set; }
-        public List<Category> Categories { get; set; }
-        public List<Cinema> Cinemas { get; set; }
-        public List<Actor> Actors { get; set; }
+        public List<int> Categories { get; set; }
+        public List<int> Cinemas { get; set; }
+        public List<int> Actors { get; set; }
     }
 }

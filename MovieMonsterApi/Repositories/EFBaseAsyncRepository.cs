@@ -43,8 +43,17 @@ namespace MovieMonsterApi.Repositories
 
         public async Task CreateAsync(TEntity entity)
         {
-            await dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await dbSet.AddAsync(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public async Task DeleteAsync(TId id)
