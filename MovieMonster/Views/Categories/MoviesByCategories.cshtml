@@ -12,18 +12,38 @@
 
     foreach(var movie in category.Movies)
     {
-        <div class="col-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@movie.Name</h5>
-                <p class="card-text">@movie.StartDate - @movie.EndDate</p>
-            </div>
-            <div class="btn-group">
-                <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Detaljer</a>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-3">
+                    <div class="card" style="width : 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Name</h5>
+                            <p class="card-text">@movie.StartDate - @movie.EndDate</p>
+                        </div>
+                     <div class="btn-group">
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Detaljer</a>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
     }
 }
 
 
+@*foreach(var movie in category.Movies)
+    {
+        <div class="container mt-5">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Name</h5>
+                        <p class="card-text">@movie.StartDate - @movie.EndDate</p>
+                    </div>
+                    <div class="btn-group">
+                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">Detaljer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }*@

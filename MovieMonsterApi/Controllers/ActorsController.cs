@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieMonsterApi.Data;
 using MovieMonsterApi.Entities;
+using MovieMonsterApi.Models;
 using MovieMonsterApi.Repositories;
 
 namespace MovieMonsterApi.Controllers
@@ -15,25 +16,27 @@ namespace MovieMonsterApi.Controllers
     [ApiController]
     public class ActorsController : ControllerBase
     {
-        private readonly IEFBaseAsyncRepository<Actor,int> _context;
+        private readonly IEFBaseAsyncRepository<Actor,int> _contextActor;
+        private readonly IEFBaseAsyncRepository<Movie, int> _contextMovie;
 
-        public ActorsController(IEFBaseAsyncRepository<Actor, int> context)
+        public ActorsController(IEFBaseAsyncRepository<Actor, int> contextActor, IEFBaseAsyncRepository<Movie, int> contextMovie)
         {
-            _context = context;
+            _contextActor = contextActor;
+            _contextMovie = contextMovie;
         }
 
         // GET: api/Actors
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Actor>>> GetActors()
         {
-            return Ok(await _context.GetAllAsync());
+            return Ok(await _contextActor.GetAllAsync());
         }
 
         // GET: api/Actors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Actor>> GetActor(int id)
         {
-            var actor = await _context.GetByIdAsync(id);
+            var actor = await _contextActor.GetByIdAsync(id);
 
             if (actor == null)
             {
@@ -53,26 +56,38 @@ namespace MovieMonsterApi.Controllers
                 return BadRequest();
             }
 
-            await _context.UpdateAsync(actor);
+            await _contextActor.UpdateAsync(actor);
 
             return NoContent();
         }
 
+
         // POST: api/Actors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Actor>> PostActor(Actor actor)
+        public async Task<ActionResult<Actor>> PostActor(ActorCreateDto actorDto)
         {
-            await _context.CreateAsync(actor);
+            var movies = await _contextMovie.GetAllAsync();
+
+            var actor = new Actor()
+            {
+                FirstName = actorDto.FirstName,
+                LastName = actorDto.LastName,
+
+                Movies = movies.Where(x => actorDto.Movies.Contains(x.Id)).ToList(),
+            };
+
+            await _contextActor.CreateAsync(actor);
 
             return CreatedAtAction("GetActor", new { id = actor.Id }, actor);
         }
+
 
         // DELETE: api/Actors/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActor(int id)
         {
-            await _context.DeleteAsync(id);
+            await _contextActor.DeleteAsync(id);
 
             return NoContent();
         }

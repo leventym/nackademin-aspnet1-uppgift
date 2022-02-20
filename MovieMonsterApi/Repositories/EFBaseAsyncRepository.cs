@@ -93,6 +93,11 @@ namespace MovieMonsterApi.Repositories
         //Generisk metod för att inkludera relaterade tabeller
         private async Task<TEntity> Including(TEntity entity, params Expression<Func<TEntity, IEnumerable<object>>>[] includeProperties)
         {
+            if (entity == null)
+            {
+                return entity;
+            }
+                
 
             foreach (var property in includeProperties)
             {

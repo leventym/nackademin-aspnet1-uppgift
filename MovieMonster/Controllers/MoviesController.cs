@@ -50,6 +50,8 @@ namespace MovieMonster.Controllers
             return View(movie);
         }
 
+
+
         // GET: Movies/Create
         public async Task<IActionResult> Create()
         {
@@ -85,51 +87,17 @@ namespace MovieMonster.Controllers
             return View();
         }
 
+
+
         // POST: Movies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(MovieCreateForm formData)
+        public async Task<IActionResult> Create(MovieCreateForm movie)
         {
             if (ModelState.IsValid)
             {
-                var responseCategories = await _httpClient.GetAsync("api/Categories");
-                if (responseCategories == null)
-                {
-                    return NotFound();
-                }
-                responseCategories.EnsureSuccessStatusCode();
-                var categories = await responseCategories.Content.ReadFromJsonAsync<IEnumerable<Category>>();
-
-                var responseCinema = await _httpClient.GetAsync("api/Cinemas");
-                if (responseCinema == null)
-                {
-                    return NotFound();
-                }
-                responseCinema.EnsureSuccessStatusCode();
-                var cinemas = await responseCinema.Content.ReadFromJsonAsync<IEnumerable<Cinema>>();
-
-                var responseActors = await _httpClient.GetAsync("api/Actors");
-                if (responseActors == null)
-                {
-                    return NotFound();
-                }
-                responseActors.EnsureSuccessStatusCode();
-                var actors = await responseActors.Content.ReadFromJsonAsync<IEnumerable<Actor>>();
-
-                var movie = new Movie()
-                {
-                    Name = formData.Name,
-                    Description = formData.Description,
-                    Price = formData.Price,
-                    StartDate = formData.StartDate,
-                    EndDate = formData.EndDate,
-                    Actors = actors.Where(x => formData.Actors.Contains(x.Id)).ToList(),
-                    Cinemas = cinemas.Where(x => formData.Cinemas.Contains(x.Id)).ToList(),
-                    Categories = categories.Where(x => formData.Categories.Contains(x.Id)).ToList()
-                };
-
                 var response = await _httpClient.PostAsJsonAsync("api/Movies", movie);
                 response.EnsureSuccessStatusCode();
                 return RedirectToAction(nameof(Index));
@@ -188,38 +156,50 @@ namespace MovieMonster.Controllers
         //    return View(movie);
         //}
 
-        //// GET: Movies/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Movies/Delete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id.Equals(0))
+            {
+                return NotFound();
+            }
 
-        //    var movie = await _context.Movie
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (movie == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var response = await _httpClient.GetAsync($"api/Movies/{id}");
 
-        //    return View(movie);
-        //}
+            if (response == null)
+            {
+                return NotFound();
+            }
 
-        //// POST: Movies/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var movie = await _context.Movie.FindAsync(id);
-        //    _context.Movie.Remove(movie);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+            response.EnsureSuccessStatusCode();
+            var movie = await response.Content.ReadFromJsonAsync<Movie>();
+            return View(movie);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if(id.Equals(0))
+            {
+                return NotFound();
+            }
+            var response = await _httpClient.DeleteAsync($"api/Movies/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return View();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
         //private bool MovieExists(int id)
         //{
         //    return _context.Movie.Any(e => e.Id == id);
         //}
+
+
     }
 }

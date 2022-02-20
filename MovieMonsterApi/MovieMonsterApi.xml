@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MovieMonsterApi</name>
+    </assembly>
+    <members>
+        <member name="M:MovieMonsterApi.Controllers.MoviesController.DeleteMovie(System.Int32)">
+            <summary>
+            Test summary for delete
+            </summary>
+            <param name="id"></param>
+            <returns code="204">Testing No Content</returns>
+        </member>
+    </members>
+</doc>
